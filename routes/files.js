@@ -48,11 +48,6 @@ const router = new Router();
 
 router.prefix('/api/files');
 
-router.get('/test', async (ctx, next) => {
-	ctx.body = ResService.success('success');
-	next();
-});
-
 /**
 * @api {post} /api/files/video 上传视屏
 * @apiName video-upload
@@ -89,8 +84,8 @@ router.post('/video', videoUpload.single('file'), async (ctx, next) => {
 * @apiError {Number} errcode 失败不为0
 * @apiError {Number} errmsg 错误消息
 */
-router.post('/image', imageUpload.single('image'), async (ctx, next) => {
-	const imageInfo = ctx.req.image;
+router.post('/image', imageUpload.single('file'), async (ctx, next) => {
+	const imageInfo = ctx.req.file;
 	ctx.body = ResService.success({ name: imageInfo.filename });
 	next();
 });

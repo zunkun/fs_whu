@@ -2,4 +2,6 @@ node_modules
 public/images/*.jpg
 public/files/upload/*.xlsx
 public/apidoc/*
+public/images/*
+public/videos/*
 package-lock.json
