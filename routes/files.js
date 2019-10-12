@@ -48,6 +48,11 @@ const router = new Router();
 
 router.prefix('/api/files');
 
+router.get('/test', async (ctx, next) => {
+	ctx.body = ResService.success('success');
+	next();
+});
+
 /**
 * @api {post} /api/files/video 上传视屏
 * @apiName video-upload

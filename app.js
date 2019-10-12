@@ -7,7 +7,6 @@ const bodyparser = require('koa-bodyparser');
 const logger = require('koa-logger');
 const fs = require('fs');
 const path = require('path');
-const config = require('./config');
 
 app.use(bodyparser({
 	enableTypes: [ 'json', 'form', 'text' ]
