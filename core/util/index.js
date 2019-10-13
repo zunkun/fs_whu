@@ -1,6 +1,9 @@
 var crypto = require('crypto');
 
 const util = {
+	randomNum () {
+		return Math.ceil(Math.random() * 1000);
+	},
 	/**
 	 * 程序等待
 	 * @param {number} mileseconds 毫秒

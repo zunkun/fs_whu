@@ -2,6 +2,7 @@ const Router = require('koa-router');
 const multer = require('koa-multer');
 const ResService = require('../core/ResService');
 const config = require('../config');
+const util = require('../core/util');
 
 const videoStorage = multer.diskStorage({
 	// 视屏保存路径
@@ -11,7 +12,7 @@ const videoStorage = multer.diskStorage({
 	// 修改文件名称
 	filename: (req, file, cb) => {
 		const fileFormat = (file.originalname).split('.'); // 以点分割成数组，数组的最后一项就是后缀名
-		cb(null, Date.now() + '.' + fileFormat[fileFormat.length - 1]);
+		cb(null, Date.now() + util.randomNum() + '.' + fileFormat[fileFormat.length - 1]);
 	}
 });
 const imageStorage = multer.diskStorage({
@@ -22,7 +23,7 @@ const imageStorage = multer.diskStorage({
 	// 修改文件名称
 	filename: (req, file, cb) => {
 		const fileFormat = (file.originalname).split('.'); // 以点分割成数组，数组的最后一项就是后缀名
-		cb(null, Date.now() + '.' + fileFormat[fileFormat.length - 1]);
+		cb(null, Date.now() + util.randomNum() + '.' + fileFormat[fileFormat.length - 1]);
 	}
 });
 

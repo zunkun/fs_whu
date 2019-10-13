@@ -31,22 +31,13 @@ $ npm run test
 1. 视屏图片上传返回图片名称
 2. 服务端需要配置nginx做静态文件服务器，nginx 配置如下
 ```
-    server {
-        listen      <PORT>;
-        server_name <server_name>;        
-        location ~ .*\.(js|css|gif|jpg|jpeg|png|bmp|swf|flv|html|htm)$ {
-            root  file_root;
-            proxy_set_header Host $host;
-            proxy_set_header X-Forwarded-For $remote_addr;
-            proxy_cache cache_one;
-            proxy_cache_valid 200 304 5m;
-            proxy_cache_valid any 1m;
-            proxy_cache_key $host$uri$is_args$args;
-            add_header Nginx-Cache "$upstream_cache_status";
-            expires 10d;
-        }
+server {
+    listen   4534;
+    server_name 119.27.170.247;
+    location ~ .*\.(mp4|flv|mp3|mpeg4|jpg|jpeg|png)$ {
+        root  /apps/files/;
     }
-
+}
 ```
 
 比如 `a123.jpg` 采用 `:server_name/images/a123.jpg` 获取图片
