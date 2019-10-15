@@ -22,7 +22,11 @@ app.on('error', (error) => {
 app.use((req, res, next) => {
 	res.setHeader('Access-Control-Allow-Origin', '*');
 	res.setHeader('Access-Control-Allow-Methods', 'GET, POST', 'PUT', 'DELETE', 'OPTIONS');
-	next();
+	if (req.method.toLowerCase() === 'options') {
+		res.send(200);
+	}	else {
+		next();
+	}
 });
 
 app.use(require('koa-static')(path.join(__dirname, '/public')));
