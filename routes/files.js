@@ -53,48 +53,58 @@ router.prefix('/api/files');
 * @api {post} /api/files/video 上传视屏
 * @apiName video-upload
 * @apiGroup 文件
-* @apiDescription 上传视屏文件
+* @apiDescription 上传视屏文件，data和belongsTo 字段任选一个传递都会返回，建议使用belongsTo
 * @apiParam  {File} file 文件信息
+* @apiParam {any} [data] 文件传递值，该字段会返回
+* @apiParam {String} [belongsTo] 文件属于谁，该字段会返回
 * @apiSuccess {Object} data 返回数据
 * @apiSuccess {String} data.name 返回文件名称
+* @apiSuccess {any} data.[data] 传递data值返回
+* @apiSuccess {String} data.[belongsTo] 传递belongsTo 返回
 * @apiSuccess {Number} errcode 成功为0
 * @apiError {Number} errmsg 错误消息
 */
 router.post('/video', videoUpload.single('file'), async (ctx, next) => {
 	const fileInfo = ctx.req.file;
+	const { data, belongsTo } = ctx.request.body;
 	if (!fileInfo) {
 		ctx.body = ResService.fail('上传视屏错误');
 		return;
 	}
-	try {
-		ctx.body = ResService.success({ name: fileInfo.filename });
-	} catch (error) {
-		console.log('上传文件失败', error);
-		ctx.body = ResService.fail('上传文件失败');
-		next();
-	}
+	const res = { name: fileInfo.filename };
+	if (data) res.data = data;
+	if (belongsTo) res.belongsTo = belongsTo;
+	ctx.body = ResService.success(res);
 });
 
 /**
 * @api {post} /api/files/images 上传图片
 * @apiName file-images
 * @apiGroup 文件
-* @apiDescription 上传图片
+* @apiDescription 上传图片，data和belongsTo 字段任选一个传递都会返回,建议使用belongsTo
 * @apiParam  {File} file 文件信息
+* @apiParam {any} [data] 文件传递值，该字段会返回
+* @apiParam {String} [belongsTo] 文件属于谁，该字段会返回
 * @apiSuccess {Object} data 返回值
 * @apiSuccess {Number} errcode 成功为0
 * @apiSuccess {Object} data {} 图片信息
 * @apiSuccess {String} data.name  图片名称
+* @apiSuccess {any} data.[data] 传递data值返回
+* @apiSuccess {String} data.[belongsTo] 传递belongsTo 返回
 * @apiError {Number} errcode 失败不为0
 * @apiError {Number} errmsg 错误消息
 */
 router.post('/image', imageUpload.single('file'), async (ctx, next) => {
-	const imageInfo = ctx.req.file;
-	if (!imageInfo) {
+	const fileInfo = ctx.req.file;
+	const { data, belongsTo } = ctx.request.body;
+	if (!fileInfo) {
 		ctx.body = ResService.fail('上传图片错误');
 		return;
 	}
-	ctx.body = ResService.success({ name: imageInfo.filename });
+	const res = { name: fileInfo.filename };
+	if (data) res.data = data;
+	if (belongsTo) res.belongsTo = belongsTo;
+	ctx.body = ResService.success(res);
 	next();
 });
 
