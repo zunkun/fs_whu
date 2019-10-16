@@ -67,14 +67,16 @@ router.prefix('/api/files');
 router.post('/video', videoUpload.single('file'), async (ctx, next) => {
 	const fileInfo = ctx.req.file;
 	const { data, belongsTo } = ctx.request.body;
+	const query = ctx.query;
 	if (!fileInfo) {
 		ctx.body = ResService.fail('上传视屏错误');
 		return;
 	}
-	const res = { name: fileInfo.filename };
-	if (data) res.data = data;
-	if (belongsTo) res.belongsTo = belongsTo;
-	ctx.body = ResService.success(res);
+	query.name = fileInfo.filename;
+	if (data) query.data = data;
+	if (belongsTo) query.belongsTo = belongsTo;
+	ctx.body = ResService.success(query);
+	next();
 });
 
 /**
@@ -97,14 +99,15 @@ router.post('/video', videoUpload.single('file'), async (ctx, next) => {
 router.post('/image', imageUpload.single('file'), async (ctx, next) => {
 	const fileInfo = ctx.req.file;
 	const { data, belongsTo } = ctx.request.body;
+	const query = ctx.query;
 	if (!fileInfo) {
 		ctx.body = ResService.fail('上传图片错误');
 		return;
 	}
-	const res = { name: fileInfo.filename };
-	if (data) res.data = data;
-	if (belongsTo) res.belongsTo = belongsTo;
-	ctx.body = ResService.success(res);
+	query.name = fileInfo.filename;
+	if (data) query.data = data;
+	if (belongsTo) query.belongsTo = belongsTo;
+	ctx.body = ResService.success(query);
 	next();
 });
 
