@@ -2,7 +2,7 @@ var crypto = require('crypto');
 
 const util = {
 	randomNum () {
-		return Math.ceil(Math.random() * 1000);
+		return Math.ceil(Math.random() * 10000);
 	},
 	/**
 	 * 程序等待

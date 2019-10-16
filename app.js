@@ -5,8 +5,14 @@ const app = new Koa();
 const json = require('koa-json');
 const bodyparser = require('koa-bodyparser');
 const logger = require('koa-logger');
+const cors = require('@koa/cors');
 const fs = require('fs');
 const path = require('path');
+
+app.use(cors({
+	'Access-Control-Allow-Origin': '*',
+	'Access-Control-Allow-Methods': 'GET,HEAD,PUT,POST,DELETE,PATCH,OPTIONS'
+}));
 
 app.use(bodyparser({
 	enableTypes: [ 'json', 'form', 'text' ]
@@ -17,16 +23,6 @@ app.use(logger());
 // 请求出错日志
 app.on('error', (error) => {
 	console.error('请求出错: ', error);
-});
-
-app.use((req, res, next) => {
-	res.setHeader('Access-Control-Allow-Origin', '*');
-	res.setHeader('Access-Control-Allow-Methods', 'GET, POST', 'PUT', 'DELETE', 'OPTIONS');
-	if (req.method.toLowerCase() === 'options') {
-		res.send(200);
-	}	else {
-		next();
-	}
 });
 
 app.use(require('koa-static')(path.join(__dirname, '/public')));

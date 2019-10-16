@@ -36,7 +36,7 @@ const imageUpload = multer({
 		const fileFormat = (file.originalname).split('.'); // 以点分割成数组，数组的最后一项就是后缀名
 		const ext = (fileFormat[fileFormat.length - 1] || '').toLowerCase();
 
-		let isLeagal = [ 'jpg', 'jpeg', 'png' ].indexOf(ext) > -1;
+		let isLeagal = [ 'jpg', 'jpeg', 'png', 'bmp', 'gif', 'tiff' ].indexOf(ext) > -1;
 		if (isLeagal) {
 			cb(null, true);
 		} else {
@@ -62,7 +62,10 @@ router.prefix('/api/files');
 */
 router.post('/video', videoUpload.single('file'), async (ctx, next) => {
 	const fileInfo = ctx.req.file;
-
+	if (!fileInfo) {
+		ctx.body = ResService.fail('上传视屏错误');
+		return;
+	}
 	try {
 		ctx.body = ResService.success({ name: fileInfo.filename });
 	} catch (error) {
@@ -87,6 +90,10 @@ router.post('/video', videoUpload.single('file'), async (ctx, next) => {
 */
 router.post('/image', imageUpload.single('file'), async (ctx, next) => {
 	const imageInfo = ctx.req.file;
+	if (!imageInfo) {
+		ctx.body = ResService.fail('上传图片错误');
+		return;
+	}
 	ctx.body = ResService.success({ name: imageInfo.filename });
 	next();
 });
