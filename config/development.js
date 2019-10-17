@@ -1,6 +1,6 @@
 module.exports = {
 	PORT: 4532,
 	secret: 'whu',
-	videoPath: '/apps/files/videos/',
-	imagePath: '/apps/files/images/'
+	videoPath: '/apps/files/video/',
+	imagePath: '/apps/files/image/'
 };
