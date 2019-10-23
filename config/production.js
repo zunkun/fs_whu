@@ -1,5 +1,5 @@
 module.exports = {
-	PORT: 4530,
+	PORT: 3004,
 	secret: 'whu',
 	videoPath: '/apps/files/video/',
 	imagePath: '/apps/files/image/'
